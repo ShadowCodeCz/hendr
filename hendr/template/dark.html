@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0px;
+            font-size: 12px;
+            font-family: monospace;
+            color: white;
+        }
+
+        h1 {
+            color: #adadad;
+        }
+
+        h2 {
+            color: #adadad;
+        }
+
+        h3 {
+            color: #adadad;
+        }
+
+        h4 {
+            color: #adadad;
+        }
+
+        /* BASE */
+        .row {
+            width: 100%;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            margin: 0px;
+            padding-left: 2px;
+            padding-right: 0px;
+            color: white;
+            text-align: left;
+            box-sizing: border-box;
+            /*vertical-align: top;*/
+        }
+
+        .row.table {
+            border-bottom: 1px solid #737373;
+            /*vertical-align: top;*/
+        }
+
+        .row.table:hover {
+            background-color: #2c2c2c;
+            border-right: 1px solid #6b6b6b;
+        }
+
+        .row.tableHeader {
+            font-size: 125%;
+            background-color: #363636;
+            color: #b7b7b7;
+            font-weight: bold;
+        }
+
+        .thinSeparator {
+            width: 100%;
+            border-bottom: 1px solid #737373;
+        }
+
+        .box {
+            display: inline-block;
+            margin: 2px;
+            padding: 2px;
+        }
+
+        .number {
+            text-align: left;
+        }
+
+        /* Not Highlight */
+        .row.notHighlighted {
+
+        }
+
+        .row.notHighlighted:hover > .number {
+            font-weight: bold;
+        }
+
+        .row.notHighlighted:hover {
+            animation: notHighlighted-animation 1s infinite;
+
+        }
+
+        /*
+        @keyframes notHighlighted-animation {
+            from {background-color: black; border-top: 1px solid black; border-bottom: 1px solid black}
+            to {background-color: #3b3b3b; border-top: 1px solid gray; border-bottom: 1px solid gray}
+        }*/
+
+        /*.row.notHighlighted:hover {
+            border: 1px solid #b0b0b0;
+            border-right: 1px solid #b0b0b0;
+            background: #414141;
+        }*/
+
+        a {
+            color: #9292f3;
+        }
+
+    </style>
+
+    <style>
+        .top-panel {
+            position: fixed;
+            overflow: hidden;
+            top: 0;
+            width: 100%;
+            vertical-align: middle;
+            z-index: 100;
+        }
+
+
+        .top-panel .major {
+            overflow: hidden;
+            background-color: #292929;
+            width: 100%;
+            padding: 2px;
+            border-bottom: 1px solid #3f3f3f;
+            vertical-align: middle;
+            z-index: 100;
+        }
+
+        .top-panel .minor {
+            overflow: hidden;
+            background-color: #1a1a1a;
+            width: 100%;
+            padding: 2px;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #3f3f3f;
+            vertical-align: middle;
+            font-size: 12px;
+            z-index: 100;
+        }
+
+        .top-spacer {
+            margin-top: 90px;
+        }
+
+        .bottom-panel {
+            overflow: hidden;
+            background-color: #1a1a1a;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 2px;
+            vertical-align: middle;
+            border-top: 1px solid #3f3f3f;
+            font-size: 11px;
+            text-align: center;
+        }
+    </style>
+
+    <style>
+        /*https://medium.com/carwow-product-engineering/building-a-simple-tooltip-component-that-never-goes-off-screen-c7039dcab5f9*/
+        @-webkit-keyframes tooltipFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes tooltipFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .tooltip {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            /*color: blue;*/
+            /*border-bottom: 1px dashed;*/
+            position: relative;
+        }
+
+        .tooltip-label:before {
+            content: "";
+            display: flex;
+            cursor: help;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+        }
+
+        .tooltip-dropdown {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            padding-top: 32px;
+            /*word-wrap: break-word;*/
+        }
+
+        .tooltip-dropdown-content {
+            color: white;
+            background-color: black;
+            border: 1px solid gray;
+            border-radius: 4px;
+            padding: 8px 12px;
+            width: 800px;
+            text-align: left;
+            /*word-wrap: break-word;*/
+        }
+
+        .tooltip-dropdown-content.red {
+            border: 1px solid red;
+        }
+
+        .tooltip--open .tooltip-dropdown {
+            -webkit-animation: tooltipFadeIn 0.15s;
+            animation: tooltipFadeIn 0.15s;
+            display: block;
+        }
+
+        @media (hover: hover) {
+            .tooltip:hover .tooltip-dropdown {
+                -webkit-animation: tooltipFadeIn 0.15s;
+                animation: tooltipFadeIn 0.15s;
+                display: block;
+            }
+        }
+
+    </style>
+<style>
+
+            /* --------------------- exp-red --------------------- */
+            .row.exp-red {
+                background-color: #a75d5d;
+                border-bottom: 1px solid red;
+                border-top: 1px solid red;
+            }
+
+            .text-exp-red {
+                color: red
+            }
+
+            /*.row.exp-red:hover {
+                background-color: ;
+            }*/
+
+            .box.exp-red {
+                background-color: #c42020;
+                border: 1px solid red;
+            }
+
+            .row.exp-red:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.exp-red:hover {
+                animation: exp-red-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes exp-red-hover-animation {
+                from {background-color: #c24646;}
+                to {background-color: red;}
+            }*/
+            
+            .tooltip-dropdown-content.exp-red
+            {
+                border: 1px solid red;
+            }
+        </style>
+<style>
+
+            /* --------------------- red --------------------- */
+            .row.red {
+                background-color: #8c0000;
+                border-bottom: 1px solid #ff0000;
+                border-top: 1px solid #ff0000;
+            }
+
+            .text-red {
+                color: #ff0000
+            }
+
+            /*.row.red:hover {
+                background-color: ;
+            }*/
+
+            .box.red {
+                background-color: #8c0000;
+                border: 1px solid #ff0000;
+            }
+
+            .row.red:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.red:hover {
+                animation: red-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes red-hover-animation {
+                from {background-color: #4d0000;}
+                to {background-color: #b70000;}
+            }*/
+            
+            .tooltip-dropdown-content.red
+            {
+                border: 1px solid #ff0000;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-red --------------------- */
+            .row.dark-red {
+                background-color: #200000;
+                border-bottom: 1px solid #ff0000;
+                border-top: 1px solid #ff0000;
+            }
+
+            .text-dark-red {
+                color: #ff0000
+            }
+
+            /*.row.dark-red:hover {
+                background-color: ;
+            }*/
+
+            .box.dark-red {
+                background-color: #200000;
+                border: 1px solid #ff0000;
+            }
+
+            .row.dark-red:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.dark-red:hover {
+                animation: dark-red-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes dark-red-hover-animation {
+                from {background-color: #4d0000;}
+                to {background-color: #b70000;}
+            }*/
+            
+            .tooltip-dropdown-content.dark-red
+            {
+                border: 1px solid #ff0000;
+            }
+        </style>
+<style>
+
+            /* --------------------- green --------------------- */
+            .row.green {
+                background-color: #008c00;
+                border-bottom: 1px solid #00ff00;
+                border-top: 1px solid #00ff00;
+            }
+
+            .text-green {
+                color: #00ff00
+            }
+
+            /*.row.green:hover {
+                background-color: ;
+            }*/
+
+            .box.green {
+                background-color: #008c00;
+                border: 1px solid #00ff00;
+            }
+
+            .row.green:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.green:hover {
+                animation: green-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes green-hover-animation {
+                from {background-color: #00a900;}
+                to {background-color: #007200;}
+            }*/
+            
+            .tooltip-dropdown-content.green
+            {
+                border: 1px solid #00ff00;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-green --------------------- */
+            .row.dark-green {
+                background-color: #002000;
+                border-bottom: 1px solid #00ff00;
+                border-top: 1px solid #00ff00;
+            }
+
+            .text-dark-green {
+                color: #00ff00
+            }
+
+            /*.row.dark-green:hover {
+                background-color: ;
+            }*/
+
+            .box.dark-green {
+                background-color: #008c00;
+                border: 1px solid #00ff00;
+            }
+
+            .row.dark-green:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.dark-green:hover {
+                animation: dark-green-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes dark-green-hover-animation {
+                from {background-color: #00a900;}
+                to {background-color: #007200;}
+            }*/
+            
+            .tooltip-dropdown-content.dark-green
+            {
+                border: 1px solid #00ff00;
+            }
+        </style>
+<style>
+
+            /* --------------------- blue --------------------- */
+            .row.blue {
+                background-color: #00009f;
+                border-bottom: 1px solid #0000ff;
+                border-top: 1px solid #0000ff;
+            }
+
+            .text-blue {
+                color: #0000ff
+            }
+
+            /*.row.blue:hover {
+                background-color: ;
+            }*/
+
+            .box.blue {
+                background-color: #0000bf;
+                border: 1px solid #0000ff;
+            }
+
+            .row.blue:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.blue:hover {
+                animation: blue-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes blue-hover-animation {
+                from {background-color: #00005d;}
+                to {background-color: #0000b9;}
+            }*/
+            
+            .tooltip-dropdown-content.blue
+            {
+                border: 1px solid #0000ff;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-blue --------------------- */
+            .row.dark-blue {
+                background-color: #000020;
+                border-bottom: 1px solid #0000ff;
+                border-top: 1px solid #0000ff;
+            }
+
+            .text-dark-blue {
+                color: #0000ff
+            }
+
+            /*.row.dark-blue:hover {
+                background-color: ;
+            }*/
+
+            .box.dark-blue {
+                background-color: #0000bf;
+                border: 1px solid #0000ff;
+            }
+
+            .row.dark-blue:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.dark-blue:hover {
+                animation: dark-blue-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes dark-blue-hover-animation {
+                from {background-color: #00005d;}
+                to {background-color: #0000b9;}
+            }*/
+            
+            .tooltip-dropdown-content.dark-blue
+            {
+                border: 1px solid #0000ff;
+            }
+        </style>
+<style>
+
+            /* --------------------- yellow --------------------- */
+            .row.yellow {
+                background-color: #8c8c00;
+                border-bottom: 1px solid #ffff00;
+                border-top: 1px solid #ffff00;
+            }
+
+            .text-yellow {
+                color: #ffff00
+            }
+
+            /*.row.yellow:hover {
+                background-color: ;
+            }*/
+
+            .box.yellow {
+                background-color: #8c8c00;
+                border: 1px solid #ffff00;
+            }
+
+            .row.yellow:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.yellow:hover {
+                animation: yellow-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes yellow-hover-animation {
+                from {background-color: #545400;}
+                to {background-color: #b2b200;}
+            }*/
+            
+            .tooltip-dropdown-content.yellow
+            {
+                border: 1px solid #ffff00;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-yellow --------------------- */
+            .row.dark-yellow {
+                background-color: #202000;
+                border-bottom: 1px solid #ffff00;
+                border-top: 1px solid #ffff00;
+            }
+
+            .text-dark-yellow {
+                color: #ffff00
+            }
+
+            /*.row.dark-yellow:hover {
+                background-color: ;
+            }*/
+
+            .box.dark-yellow {
+                background-color: #8c8c00;
+                border: 1px solid #ffff00;
+            }
+
+            .row.dark-yellow:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.dark-yellow:hover {
+                animation: dark-yellow-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes dark-yellow-hover-animation {
+                from {background-color: #545400;}
+                to {background-color: #b2b200;}
+            }*/
+            
+            .tooltip-dropdown-content.dark-yellow
+            {
+                border: 1px solid #ffff00;
+            }
+        </style>
+<style>
+
+            /* --------------------- gray --------------------- */
+            .row.gray {
+                background-color: #272727;
+                border-bottom: 1px solid #5e5e5e;
+                border-top: 1px solid #5e5e5e;
+            }
+
+            .text-gray {
+                color: #5e5e5e
+            }
+
+            /*.row.gray:hover {
+                background-color: ;
+            }*/
+
+            .box.gray {
+                background-color: #272727;
+                border: 1px solid #525252;
+            }
+
+            .row.gray:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.gray:hover {
+                animation: gray-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes gray-hover-animation {
+                from {background-color: #272727;}
+                to {background-color: #525252;}
+            }*/
+            
+            .tooltip-dropdown-content.gray
+            {
+                border: 1px solid #525252;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-gray --------------------- */
+            .row.dark-gray {
+                background-color: #151515;
+                border-bottom: 1px solid #5e5e5e;
+                border-top: 1px solid #5e5e5e;
+            }
+
+            .text-dark-gray {
+                color: #5e5e5e
+            }
+
+            /*.row.dark-gray:hover {
+                background-color: ;
+            }*/
+
+            .box.dark-gray {
+                background-color: #151515;
+                border: 1px solid #424242;
+            }
+
+            .row.dark-gray:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.dark-gray:hover {
+                animation: dark-gray-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes dark-gray-hover-animation {
+                from {background-color: #272727;}
+                to {background-color: #444444;}
+            }*/
+            
+            .tooltip-dropdown-content.dark-gray
+            {
+                border: 1px solid #424242;
+            }
+        </style>
+<style>
+
+            /* --------------------- violet --------------------- */
+            .row.violet {
+                background-color: #830083;
+                border-bottom: 1px solid #ff00ff;
+                border-top: 1px solid #ff00ff;
+            }
+
+            .text-violet {
+                color: #ff00ff
+            }
+
+            /*.row.violet:hover {
+                background-color: ;
+            }*/
+
+            .box.violet {
+                background-color: #8c008c;
+                border: 1px solid #ff00ff;
+            }
+
+            .row.violet:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.violet:hover {
+                animation: violet-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes violet-hover-animation {
+                from {background-color: #8c008c;}
+                to {background-color: #935193;}
+            }*/
+            
+            .tooltip-dropdown-content.violet
+            {
+                border: 1px solid #ff00ff;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-violet --------------------- */
+            .row.dark-violet {
+                background-color: #200020;
+                border-bottom: 1px solid #ff00ff;
+                border-top: 1px solid #ff00ff;
+            }
+
+            .text-dark-violet {
+                color: #ff00ff
+            }
+
+            /*.row.dark-violet:hover {
+                background-color: ;
+            }*/
+
+            .box.dark-violet {
+                background-color: #200020;
+                border: 1px solid #ff00ff;
+            }
+
+            .row.dark-violet:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.dark-violet:hover {
+                animation: dark-violet-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes dark-violet-hover-animation {
+                from {background-color: #200020;}
+                to {background-color: #935193;}
+            }*/
+            
+            .tooltip-dropdown-content.dark-violet
+            {
+                border: 1px solid #ff00ff;
+            }
+        </style>
+<style>
+
+            /* --------------------- orange --------------------- */
+            .row.orange {
+                background-color: #cb7b00;
+                border-bottom: 1px solid #ffcb16;
+                border-top: 1px solid #ffcb16;
+            }
+
+            .text-orange {
+                color: #ffcb16
+            }
+
+            /*.row.orange:hover {
+                background-color: ;
+            }*/
+
+            .box.orange {
+                background-color: #cb7b00;
+                border: 1px solid #ffcb16;
+            }
+
+            .row.orange:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.orange:hover {
+                animation: orange-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes orange-hover-animation {
+                from {background-color: #965d00;}
+                to {background-color: #d28800;}
+            }*/
+            
+            .tooltip-dropdown-content.orange
+            {
+                border: 1px solid #ffcb16;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-orange --------------------- */
+            .row.dark-orange {
+                background-color: #200f00;
+                border-bottom: 1px solid #ffcb16;
+                border-top: 1px solid #ffcb16;
+            }
+
+            .text-dark-orange {
+                color: #ffcb16
+            }
+
+            /*.row.dark-orange:hover {
+                background-color: ;
+            }*/
+
+            .box.dark-orange {
+                background-color: #200f00;
+                border: 1px solid #ffcb16;
+            }
+
+            .row.dark-orange:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.dark-orange:hover {
+                animation: dark-orange-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes dark-orange-hover-animation {
+                from {background-color: #200f00;}
+                to {background-color: #d28800;}
+            }*/
+            
+            .tooltip-dropdown-content.dark-orange
+            {
+                border: 1px solid #ffcb16;
+            }
+        </style>
+<style>
+
+            /* --------------------- pink --------------------- */
+            .row.pink {
+                background-color: #c63e7d;
+                border-bottom: 1px solid #ff81cf;
+                border-top: 1px solid #ff81cf;
+            }
+
+            .text-pink {
+                color: #ff81cf
+            }
+
+            /*.row.pink:hover {
+                background-color: ;
+            }*/
+
+            .box.pink {
+                background-color: #c63e7d;
+                border: 1px solid #ff81cf;
+            }
+
+            .row.pink:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.pink:hover {
+                animation: pink-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes pink-hover-animation {
+                from {background-color: #c63e7d;}
+                to {background-color: #b75c88;}
+            }*/
+            
+            .tooltip-dropdown-content.pink
+            {
+                border: 1px solid #ff81cf;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-pink --------------------- */
+            .row.dark-pink {
+                background-color: #200d10;
+                border-bottom: 1px solid #ff81cf;
+                border-top: 1px solid #ff81cf;
+            }
+
+            .text-dark-pink {
+                color: #ff81cf
+            }
+
+            /*.row.dark-pink:hover {
+                background-color: ;
+            }*/
+
+            .box.dark-pink {
+                background-color: #200d10;
+                border: 1px solid #ff81cf;
+            }
+
+            .row.dark-pink:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.dark-pink:hover {
+                animation: dark-pink-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes dark-pink-hover-animation {
+                from {background-color: #200d10;}
+                to {background-color: #b75c88;}
+            }*/
+            
+            .tooltip-dropdown-content.dark-pink
+            {
+                border: 1px solid #ff81cf;
+            }
+        </style>
+<style>
+
+            /* --------------------- cyan --------------------- */
+            .row.cyan {
+                background-color: #00b1b4;
+                border-bottom: 1px solid #31fffc;
+                border-top: 1px solid #31fffc;
+            }
+
+            .text-cyan {
+                color: #31fffc
+            }
+
+            /*.row.cyan:hover {
+                background-color: ;
+            }*/
+
+            .box.cyan {
+                background-color: #00b1b4;
+                border: 1px solid #31fffc;
+            }
+
+            .row.cyan:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.cyan:hover {
+                animation: cyan-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes cyan-hover-animation {
+                from {background-color: #00b1b4;}
+                to {background-color: #007373;}
+            }*/
+            
+            .tooltip-dropdown-content.cyan
+            {
+                border: 1px solid #31fffc;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-cyan --------------------- */
+            .row.dark-cyan {
+                background-color: #001f20;
+                border-bottom: 1px solid #31fffc;
+                border-top: 1px solid #31fffc;
+            }
+
+            .text-dark-cyan {
+                color: #31fffc
+            }
+
+            /*.row.dark-cyan:hover {
+                background-color: ;
+            }*/
+
+            .box.dark-cyan {
+                background-color: #001f20;
+                border: 1px solid #31fffc;
+            }
+
+            .row.dark-cyan:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.dark-cyan:hover {
+                animation: dark-cyan-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes dark-cyan-hover-animation {
+                from {background-color: #001f20;}
+                to {background-color: #007373;}
+            }*/
+            
+            .tooltip-dropdown-content.dark-cyan
+            {
+                border: 1px solid #31fffc;
+            }
+        </style>
+<style>
+
+            /* --------------------- navy --------------------- */
+            .row.navy {
+                background-color: #242f60;
+                border-bottom: 1px solid #394eba;
+                border-top: 1px solid #394eba;
+            }
+
+            .text-navy {
+                color: #394eba
+            }
+
+            /*.row.navy:hover {
+                background-color: ;
+            }*/
+
+            .box.navy {
+                background-color: #2f3f7f;
+                border: 1px solid #394eba;
+            }
+
+            .row.navy:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.navy:hover {
+                animation: navy-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes navy-hover-animation {
+                from {background-color: #0f1020;}
+                to {background-color: #5959c9;}
+            }*/
+            
+            .tooltip-dropdown-content.navy
+            {
+                border: 1px solid #394eba;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-navy --------------------- */
+            .row.dark-navy {
+                background-color: #0f1020;
+                border-bottom: 1px solid #394eba;
+                border-top: 1px solid #394eba;
+            }
+
+            .text-dark-navy {
+                color: #394eba
+            }
+
+            /*.row.dark-navy:hover {
+                background-color: ;
+            }*/
+
+            .box.dark-navy {
+                background-color: #0f1020;
+                border: 1px solid #394eba;
+            }
+
+            .row.dark-navy:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.dark-navy:hover {
+                animation: dark-navy-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes dark-navy-hover-animation {
+                from {background-color: #0f1020;}
+                to {background-color: #3a3aa1;}
+            }*/
+            
+            .tooltip-dropdown-content.dark-navy
+            {
+                border: 1px solid #394eba;
+            }
+        </style>
+<style>
+
+            /* --------------------- mink --------------------- */
+            .row.mink {
+                background-color: #7f7772;
+                border-bottom: 1px solid #c5bdb9;
+                border-top: 1px solid #c5bdb9;
+            }
+
+            .text-mink {
+                color: #c5bdb9
+            }
+
+            /*.row.mink:hover {
+                background-color: ;
+            }*/
+
+            .box.mink {
+                background-color: #7f7772;
+                border: 1px solid #bab2ad;
+            }
+
+            .row.mink:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.mink:hover {
+                animation: mink-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes mink-hover-animation {
+                from {background-color: #67605d;}
+                to {background-color: #918b86;}
+            }*/
+            
+            .tooltip-dropdown-content.mink
+            {
+                border: 1px solid #bab2ad;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-mink --------------------- */
+            .row.dark-mink {
+                background-color: #201b1a;
+                border-bottom: 1px solid #c5bdb9;
+                border-top: 1px solid #c5bdb9;
+            }
+
+            .text-dark-mink {
+                color: #c5bdb9
+            }
+
+            /*.row.dark-mink:hover {
+                background-color: ;
+            }*/
+
+            .box.dark-mink {
+                background-color: #201b1a;
+                border: 1px solid #bab2ad;
+            }
+
+            .row.dark-mink:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.dark-mink:hover {
+                animation: dark-mink-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes dark-mink-hover-animation {
+                from {background-color: #67605d;}
+                to {background-color: #918b86;}
+            }*/
+            
+            .tooltip-dropdown-content.dark-mink
+            {
+                border: 1px solid #bab2ad;
+            }
+        </style>
+<style>
+
+            /* --------------------- tortila --------------------- */
+            .row.tortila {
+                background-color: #997950;
+                border-bottom: 1px solid #ecc890;
+                border-top: 1px solid #ecc890;
+            }
+
+            .text-tortila {
+                color: #ecc890
+            }
+
+            /*.row.tortila:hover {
+                background-color: ;
+            }*/
+
+            .box.tortila {
+                background-color: #997950;
+                border: 1px solid #ecc890;
+            }
+
+            .row.tortila:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.tortila:hover {
+                animation: tortila-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes tortila-hover-animation {
+                from {background-color: #755d3f;}
+                to {background-color: #9d885f;}
+            }*/
+            
+            .tooltip-dropdown-content.tortila
+            {
+                border: 1px solid #ecc890;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-tortila --------------------- */
+            .row.dark-tortila {
+                background-color: #20170f;
+                border-bottom: 1px solid #ecc890;
+                border-top: 1px solid #ecc890;
+            }
+
+            .text-dark-tortila {
+                color: #ecc890
+            }
+
+            /*.row.dark-tortila:hover {
+                background-color: ;
+            }*/
+
+            .box.dark-tortila {
+                background-color: #20170f;
+                border: 1px solid #ecc890;
+            }
+
+            .row.dark-tortila:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.dark-tortila:hover {
+                animation: dark-tortila-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes dark-tortila-hover-animation {
+                from {background-color: #20170f;}
+                to {background-color: #9d885f;}
+            }*/
+            
+            .tooltip-dropdown-content.dark-tortila
+            {
+                border: 1px solid #ecc890;
+            }
+        </style>
+<style>
+
+            /* --------------------- flax --------------------- */
+            .row.flax {
+                background-color: #b5a35b;
+                border-bottom: 1px solid #ffed8f;
+                border-top: 1px solid #ffed8f;
+            }
+
+            .text-flax {
+                color: #ffed8f
+            }
+
+            /*.row.flax:hover {
+                background-color: ;
+            }*/
+
+            .box.flax {
+                background-color: #b5a35b;
+                border: 1px solid #ffed8f;
+            }
+
+            .row.flax:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.flax:hover {
+                animation: flax-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes flax-hover-animation {
+                from {background-color: #6e6238;}
+                to {background-color: #9f965a;}
+            }*/
+            
+            .tooltip-dropdown-content.flax
+            {
+                border: 1px solid #ffed8f;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-flax --------------------- */
+            .row.dark-flax {
+                background-color: #201d0f;
+                border-bottom: 1px solid #ffed8f;
+                border-top: 1px solid #ffed8f;
+            }
+
+            .text-dark-flax {
+                color: #ffed8f
+            }
+
+            /*.row.dark-flax:hover {
+                background-color: ;
+            }*/
+
+            .box.dark-flax {
+                background-color: #201d0f;
+                border: 1px solid #ffed8f;
+            }
+
+            .row.dark-flax:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.dark-flax:hover {
+                animation: dark-flax-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes dark-flax-hover-animation {
+                from {background-color: #6e6238;}
+                to {background-color: #9f965a;}
+            }*/
+            
+            .tooltip-dropdown-content.dark-flax
+            {
+                border: 1px solid #ffed8f;
+            }
+        </style>
+<style>
+
+            /* --------------------- brown --------------------- */
+            .row.brown {
+                background-color: #523A28;
+                border-bottom: 1px solid #A47551;
+                border-top: 1px solid #A47551;
+            }
+
+            .text-brown {
+                color: #A47551
+            }
+
+            /*.row.brown:hover {
+                background-color: ;
+            }*/
+
+            .box.brown {
+                background-color: #523A28;
+                border: 1px solid #A47551;
+            }
+
+            .row.brown:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.brown:hover {
+                animation: brown-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes brown-hover-animation {
+                from {background-color: #523A28;}
+                to {background-color: #6e4f37;}
+            }*/
+            
+            .tooltip-dropdown-content.brown
+            {
+                border: 1px solid #A47551;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-brown --------------------- */
+            .row.dark-brown {
+                background-color: #2f2316;
+                border-bottom: 1px solid #A47551;
+                border-top: 1px solid #A47551;
+            }
+
+            .text-dark-brown {
+                color: #A47551
+            }
+
+            /*.row.dark-brown:hover {
+                background-color: ;
+            }*/
+
+            .box.dark-brown {
+                background-color: #2f2316;
+                border: 1px solid #A47551;
+            }
+
+            .row.dark-brown:hover > .number {
+                font-weight: bold;
+            }
+            
+            .row.dark-brown:hover {
+                animation: dark-brown-hover-animation 1s infinite;
+            }
+
+            /*
+            @keyframes dark-brown-hover-animation {
+                from {background-color: #2f2316;}
+                to {background-color: #6e4f37;}
+            }*/
+            
+            .tooltip-dropdown-content.dark-brown
+            {
+                border: 1px solid #A47551;
+            }
+        </style>
+</head>
+<body>
+<script>
+    function toggleFold(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+<script>
+    function toggleBorderWidth(id) {
+        var x = document.getElementById(id);
+        if (x.style.borderWidth  === "4px") {
+            x.style.borderWidth  = "1px";
+
+            if (x.classList.contains("notHighlighted")) {
+                x.style.borderTop = "1px solid black"
+                x.style.borderBottom = "1px solid black"
+            }
+        } else {
+            x.style.borderWidth  = "4px";
+            if (x.classList.contains("notHighlighted")) {
+                x.style.borderTop = "4px solid gray"
+                x.style.borderBottom = "4px solid gray"
+            }
+        }
+    }
+</script>
+<script>
+    class Tooltip extends HTMLElement {
+        connectedCallback() {
+            this.setup();
+        }
+
+        handleDropdownPosition() {
+            const screenPadding = 20;
+
+            const placeholderRect = this.placeholder.getBoundingClientRect();
+            const dropdownRect = this.dropdown.getBoundingClientRect();
+
+            const dropdownRightX = dropdownRect.x + dropdownRect.width;
+            const placeholderRightX = placeholderRect.x + placeholderRect.width;
+
+            if (dropdownRect.x < 0) {
+                this.dropdown.style.left = '0';
+                this.dropdown.style.right = 'auto';
+                this.dropdown.style.transform = `translateX(${(-placeholderRect.x + screenPadding)}px)`;
+            } else if (dropdownRightX > window.outerWidth) {
+                this.dropdown.style.left = 'auto';
+                this.dropdown.style.right = '0';
+                this.dropdown.style.transform = `translateX(${((window.outerWidth - placeholderRightX) - screenPadding)}px)`;
+            }
+        }
+
+        toggle() {
+            if (this.classList.contains('tooltip--open')) {
+                this.close();
+            } else {
+                this.open();
+            }
+        }
+
+        open() {
+            this.classList.add('tooltip--open');
+            this.handleDropdownPosition();
+        }
+
+        close() {
+            this.classList.remove('tooltip--open');
+        }
+
+        setup() {
+            this.placeholder = this.querySelector('[data-tooltip-placeholder]');
+            this.dropdown = this.querySelector('[data-tooltip-dropdown]');
+
+            this.placeholder.addEventListener('mouseover', () => this.handleDropdownPosition());
+            this.placeholder.addEventListener('touchstart', () => this.toggle());
+        }
+    }
+
+    function dismissAllTooltips(event) {
+        if (typeof event.target.closest !== 'function') return;
+        const currentTooltip = event.target.closest('carwow-tooltip');
+
+        document.querySelectorAll('.tooltip--open').forEach(tooltip => {
+            if (tooltip === currentTooltip) return;
+
+            tooltip.classList.remove('tooltip--open');
+        });
+    }
+
+    customElements.define('wow-tooltip', Tooltip);
+    document.addEventListener('touchstart', e => dismissAllTooltips(e));
+</script>
+</body>
+</html>

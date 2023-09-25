@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Super Fake Title</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0px;
+            font-size: 12px;
+            font-family: monospace;
+            color: white;
+        }
+
+        h1 {
+            color: #adadad;
+        }
+
+        h2 {
+            color: #adadad;
+        }
+
+        h3 {
+            color: #adadad;
+        }
+
+        h4 {
+            color: #adadad;
+        }
+
+        /* BASE */
+        .row {
+            width: 100%;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            margin: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            color: white;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        .row.table {
+            border-bottom: 1px solid #737373;
+        }
+
+        .row.table:hover {
+            background-color: #2c2c2c;
+            border-right: 1px solid #6b6b6b;
+        }
+
+        .row.tableHeader {
+            font-size: 125%;
+            background-color: #363636;
+            color: #b7b7b7;
+            font-weight: bold;
+        }
+
+        .thinSeparator {
+            width: 100%;
+            border-bottom: 1px solid #737373;
+        }
+
+        .box {
+            display: inline-block;
+            margin: 2px;
+            padding: 2px;
+        }
+
+        .number {
+            text-align: left;
+        }
+
+        /* Not Highlight */
+        .row.notHighlighted {
+
+        }
+
+        .row.notHighlighted:hover > .number {
+            font-weight: bold;
+        }
+
+        .row.notHighlighted:hover {
+            border: 1px solid #b0b0b0;
+            border-right: 1px solid #b0b0b0;
+            /*border-left: 1px solid #b0b0b0;*/
+            background: #414141;
+        }
+    </style>
+
+    <style>
+        .top-panel {
+            position: fixed;
+            overflow: hidden;
+            top: 0;
+            width: 100%;
+            vertical-align: middle;
+        }
+
+
+        .top-panel .major {
+            overflow: hidden;
+            background-color: #292929;
+            width: 100%;
+            padding: 2px;
+            border-bottom: 1px solid #3f3f3f;
+            vertical-align: middle;
+        }
+
+        .top-panel .minor {
+            overflow: hidden;
+            background-color: #1a1a1a;
+            width: 100%;
+            padding: 2px;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #3f3f3f;
+            vertical-align: middle;
+            font-size: 12px;
+        }
+
+        .top-spacer {
+            margin-top: 90px;
+        }
+
+        .bottom-panel {
+            overflow: hidden;
+            background-color: #1a1a1a;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 2px;
+            vertical-align: middle;
+            border-top: 1px solid #3f3f3f;
+            font-size: 11px;
+            text-align: center;
+        }
+    </style>
+
+    <style>
+        /*https://medium.com/carwow-product-engineering/building-a-simple-tooltip-component-that-never-goes-off-screen-c7039dcab5f9*/
+        @-webkit-keyframes tooltipFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes tooltipFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .tooltip {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            /*color: blue;*/
+            /*border-bottom: 1px dashed;*/
+            position: relative;
+        }
+
+        .tooltip-label:before {
+            content: "";
+            display: flex;
+            cursor: help;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+        }
+
+        .tooltip-dropdown {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            padding-top: 32px;
+            /*word-wrap: break-word;*/
+        }
+
+        .tooltip-dropdown-content {
+            color: white;
+            background-color: black;
+            border: 1px solid gray;
+            border-radius: 4px;
+            padding: 8px 12px;
+            width: 850px;
+            text-align: left;
+            /*word-wrap: break-word;*/
+        }
+
+        .tooltip-dropdown-content.red {
+            border: 1px solid red;
+        }
+
+        .tooltip--open .tooltip-dropdown {
+            -webkit-animation: tooltipFadeIn 0.15s;
+            animation: tooltipFadeIn 0.15s;
+            display: block;
+        }
+
+        @media (hover: hover) {
+            .tooltip:hover .tooltip-dropdown {
+                -webkit-animation: tooltipFadeIn 0.15s;
+                animation: tooltipFadeIn 0.15s;
+                display: block;
+            }
+        }
+
+    </style>
+<style>
+
+            /* --------------------- exp-red --------------------- */
+            .row.exp-red {
+                background-color: #a75d5d;
+                border-bottom: 1px solid red;
+                border-top: 1px solid red;
+            }
+
+            .row.exp-red:hover {
+                background-color: #c24646;
+                border: 1px solid red;
+            }
+
+            .box.exp-red {
+                background-color: #c42020;
+                border: 1px solid red;
+            }
+
+            .row.exp-red:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.exp-red
+            {
+                border: 1px solid red;
+            }
+        </style>
+<style>
+
+            /* --------------------- red --------------------- */
+            .row.red {
+                background-color: #8c0000;
+                border-bottom: 1px solid #ff0000;
+                border-top: 1px solid #ff0000;
+            }
+
+            .row.red:hover {
+                background-color: red;
+                border: 1px solid red;
+            }
+
+            .box.red {
+                background-color: #8c0000;
+                border: 1px solid #ff0000;
+            }
+
+            .row.red:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.red
+            {
+                border: 1px solid #ff0000;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-red --------------------- */
+            .row.dark-red {
+                background-color: #200000;
+                border-bottom: 1px solid #ff0000;
+                border-top: 1px solid #ff0000;
+            }
+
+            .row.dark-red:hover {
+                background-color: red;
+                border: 1px solid red;
+            }
+
+            .box.dark-red {
+                background-color: #200000;
+                border: 1px solid #ff0000;
+            }
+
+            .row.dark-red:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.dark-red
+            {
+                border: 1px solid #ff0000;
+            }
+        </style>
+<style>
+
+            /* --------------------- green --------------------- */
+            .row.green {
+                background-color: #008c00;
+                border-bottom: 1px solid #00ff00;
+                border-top: 1px solid #00ff00;
+            }
+
+            .row.green:hover {
+                background-color: green;
+                border: 1px solid green;
+            }
+
+            .box.green {
+                background-color: #008c00;
+                border: 1px solid #00ff00;
+            }
+
+            .row.green:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.green
+            {
+                border: 1px solid #00ff00;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-green --------------------- */
+            .row.dark-green {
+                background-color: #002000;
+                border-bottom: 1px solid #00ff00;
+                border-top: 1px solid #00ff00;
+            }
+
+            .row.dark-green:hover {
+                background-color: green;
+                border: 1px solid green;
+            }
+
+            .box.dark-green {
+                background-color: #008c00;
+                border: 1px solid #00ff00;
+            }
+
+            .row.dark-green:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.dark-green
+            {
+                border: 1px solid #00ff00;
+            }
+        </style>
+<style>
+
+            /* --------------------- blue --------------------- */
+            .row.blue {
+                background-color: #0000bf;
+                border-bottom: 1px solid #0000ff;
+                border-top: 1px solid #0000ff;
+            }
+
+            .row.blue:hover {
+                background-color: blue;
+                border: 1px solid blue;
+            }
+
+            .box.blue {
+                background-color: #0000bf;
+                border: 1px solid #0000ff;
+            }
+
+            .row.blue:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.blue
+            {
+                border: 1px solid #0000ff;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-blue --------------------- */
+            .row.dark-blue {
+                background-color: #000020;
+                border-bottom: 1px solid #0000ff;
+                border-top: 1px solid #0000ff;
+            }
+
+            .row.dark-blue:hover {
+                background-color: blue;
+                border: 1px solid blue;
+            }
+
+            .box.dark-blue {
+                background-color: #0000bf;
+                border: 1px solid #0000ff;
+            }
+
+            .row.dark-blue:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.dark-blue
+            {
+                border: 1px solid #0000ff;
+            }
+        </style>
+<style>
+
+            /* --------------------- yellow --------------------- */
+            .row.yellow {
+                background-color: #8c8c00;
+                border-bottom: 1px solid #ffff00;
+                border-top: 1px solid #ffff00;
+            }
+
+            .row.yellow:hover {
+                background-color: yellow;
+                border: 1px solid yellow;
+            }
+
+            .box.yellow {
+                background-color: #8c8c00;
+                border: 1px solid #ffff00;
+            }
+
+            .row.yellow:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.yellow
+            {
+                border: 1px solid #ffff00;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-yellow --------------------- */
+            .row.dark-yellow {
+                background-color: #202000;
+                border-bottom: 1px solid #ffff00;
+                border-top: 1px solid #ffff00;
+            }
+
+            .row.dark-yellow:hover {
+                background-color: yellow;
+                border: 1px solid yellow;
+            }
+
+            .box.dark-yellow {
+                background-color: #8c8c00;
+                border: 1px solid #ffff00;
+            }
+
+            .row.dark-yellow:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.dark-yellow
+            {
+                border: 1px solid #ffff00;
+            }
+        </style>
+<style>
+
+            /* --------------------- gray --------------------- */
+            .row.gray {
+                background-color: #272727;
+                border-bottom: 1px solid #525252;
+                border-top: 1px solid #525252;
+            }
+
+            .row.gray:hover {
+                background-color: gray;
+                border: 1px solid gray;
+            }
+
+            .box.gray {
+                background-color: #272727;
+                border: 1px solid #525252;
+            }
+
+            .row.gray:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.gray
+            {
+                border: 1px solid #525252;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-gray --------------------- */
+            .row.dark-gray {
+                background-color: #151515;
+                border-bottom: 1px solid #424242;
+                border-top: 1px solid #424242;
+            }
+
+            .row.dark-gray:hover {
+                background-color: gray;
+                border: 1px solid gray;
+            }
+
+            .box.dark-gray {
+                background-color: #151515;
+                border: 1px solid #424242;
+            }
+
+            .row.dark-gray:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.dark-gray
+            {
+                border: 1px solid #424242;
+            }
+        </style>
+<style>
+
+            /* --------------------- violet --------------------- */
+            .row.violet {
+                background-color: #8c008c;
+                border-bottom: 1px solid #ff00ff;
+                border-top: 1px solid #ff00ff;
+            }
+
+            .row.violet:hover {
+                background-color: violet;
+                border: 1px solid violet;
+            }
+
+            .box.violet {
+                background-color: #8c008c;
+                border: 1px solid #ff00ff;
+            }
+
+            .row.violet:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.violet
+            {
+                border: 1px solid #ff00ff;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-violet --------------------- */
+            .row.dark-violet {
+                background-color: #200020;
+                border-bottom: 1px solid #ff00ff;
+                border-top: 1px solid #ff00ff;
+            }
+
+            .row.dark-violet:hover {
+                background-color: violet;
+                border: 1px solid violet;
+            }
+
+            .box.dark-violet {
+                background-color: #200020;
+                border: 1px solid #ff00ff;
+            }
+
+            .row.dark-violet:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.dark-violet
+            {
+                border: 1px solid #ff00ff;
+            }
+        </style>
+<style>
+
+            /* --------------------- orange --------------------- */
+            .row.orange {
+                background-color: #cb7b00;
+                border-bottom: 1px solid #ffcb16;
+                border-top: 1px solid #ffcb16;
+            }
+
+            .row.orange:hover {
+                background-color: orange;
+                border: 1px solid orange;
+            }
+
+            .box.orange {
+                background-color: #cb7b00;
+                border: 1px solid #ffcb16;
+            }
+
+            .row.orange:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.orange
+            {
+                border: 1px solid #ffcb16;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-orange --------------------- */
+            .row.dark-orange {
+                background-color: #200f00;
+                border-bottom: 1px solid #ffcb16;
+                border-top: 1px solid #ffcb16;
+            }
+
+            .row.dark-orange:hover {
+                background-color: orange;
+                border: 1px solid orange;
+            }
+
+            .box.dark-orange {
+                background-color: #200f00;
+                border: 1px solid #ffcb16;
+            }
+
+            .row.dark-orange:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.dark-orange
+            {
+                border: 1px solid #ffcb16;
+            }
+        </style>
+<style>
+
+            /* --------------------- pink --------------------- */
+            .row.pink {
+                background-color: #c63e7d;
+                border-bottom: 1px solid #ff81cf;
+                border-top: 1px solid #ff81cf;
+            }
+
+            .row.pink:hover {
+                background-color: pink;
+                border: 1px solid pink;
+            }
+
+            .box.pink {
+                background-color: #c63e7d;
+                border: 1px solid #ff81cf;
+            }
+
+            .row.pink:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.pink
+            {
+                border: 1px solid #ff81cf;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-pink --------------------- */
+            .row.dark-pink {
+                background-color: #200d10;
+                border-bottom: 1px solid #ff81cf;
+                border-top: 1px solid #ff81cf;
+            }
+
+            .row.dark-pink:hover {
+                background-color: pink;
+                border: 1px solid pink;
+            }
+
+            .box.dark-pink {
+                background-color: #200d10;
+                border: 1px solid #ff81cf;
+            }
+
+            .row.dark-pink:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.dark-pink
+            {
+                border: 1px solid #ff81cf;
+            }
+        </style>
+<style>
+
+            /* --------------------- cyan --------------------- */
+            .row.cyan {
+                background-color: #00b1b4;
+                border-bottom: 1px solid #31fffc;
+                border-top: 1px solid #31fffc;
+            }
+
+            .row.cyan:hover {
+                background-color: cyan;
+                border: 1px solid cyan;
+            }
+
+            .box.cyan {
+                background-color: #00b1b4;
+                border: 1px solid #31fffc;
+            }
+
+            .row.cyan:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.cyan
+            {
+                border: 1px solid #31fffc;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-cyan --------------------- */
+            .row.dark-cyan {
+                background-color: #001f20;
+                border-bottom: 1px solid #31fffc;
+                border-top: 1px solid #31fffc;
+            }
+
+            .row.dark-cyan:hover {
+                background-color: cyan;
+                border: 1px solid cyan;
+            }
+
+            .box.dark-cyan {
+                background-color: #001f20;
+                border: 1px solid #31fffc;
+            }
+
+            .row.dark-cyan:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.dark-cyan
+            {
+                border: 1px solid #31fffc;
+            }
+        </style>
+<style>
+
+            /* --------------------- navy --------------------- */
+            .row.navy {
+                background-color: #2f3f7f;
+                border-bottom: 1px solid #394eba;
+                border-top: 1px solid #394eba;
+            }
+
+            .row.navy:hover {
+                background-color: navy;
+                border: 1px solid navy;
+            }
+
+            .box.navy {
+                background-color: #2f3f7f;
+                border: 1px solid #394eba;
+            }
+
+            .row.navy:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.navy
+            {
+                border: 1px solid #394eba;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-navy --------------------- */
+            .row.dark-navy {
+                background-color: #0f1020;
+                border-bottom: 1px solid #394eba;
+                border-top: 1px solid #394eba;
+            }
+
+            .row.dark-navy:hover {
+                background-color: navy;
+                border: 1px solid navy;
+            }
+
+            .box.dark-navy {
+                background-color: #0f1020;
+                border: 1px solid #394eba;
+            }
+
+            .row.dark-navy:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.dark-navy
+            {
+                border: 1px solid #394eba;
+            }
+        </style>
+<style>
+
+            /* --------------------- mink --------------------- */
+            .row.mink {
+                background-color: #7f7772;
+                border-bottom: 1px solid #bab2ad;
+                border-top: 1px solid #bab2ad;
+            }
+
+            .row.mink:hover {
+                background-color: mink;
+                border: 1px solid mink;
+            }
+
+            .box.mink {
+                background-color: #7f7772;
+                border: 1px solid #bab2ad;
+            }
+
+            .row.mink:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.mink
+            {
+                border: 1px solid #bab2ad;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-mink --------------------- */
+            .row.dark-mink {
+                background-color: #201b1a;
+                border-bottom: 1px solid #bab2ad;
+                border-top: 1px solid #bab2ad;
+            }
+
+            .row.dark-mink:hover {
+                background-color: mink;
+                border: 1px solid mink;
+            }
+
+            .box.dark-mink {
+                background-color: #201b1a;
+                border: 1px solid #bab2ad;
+            }
+
+            .row.dark-mink:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.dark-mink
+            {
+                border: 1px solid #bab2ad;
+            }
+        </style>
+<style>
+
+            /* --------------------- tortila --------------------- */
+            .row.tortila {
+                background-color: #997950;
+                border-bottom: 1px solid #ecc890;
+                border-top: 1px solid #ecc890;
+            }
+
+            .row.tortila:hover {
+                background-color: tortila;
+                border: 1px solid tortila;
+            }
+
+            .box.tortila {
+                background-color: #997950;
+                border: 1px solid #ecc890;
+            }
+
+            .row.tortila:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.tortila
+            {
+                border: 1px solid #ecc890;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-tortila --------------------- */
+            .row.dark-tortila {
+                background-color: #20170f;
+                border-bottom: 1px solid #ecc890;
+                border-top: 1px solid #ecc890;
+            }
+
+            .row.dark-tortila:hover {
+                background-color: tortila;
+                border: 1px solid tortila;
+            }
+
+            .box.dark-tortila {
+                background-color: #20170f;
+                border: 1px solid #ecc890;
+            }
+
+            .row.dark-tortila:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.dark-tortila
+            {
+                border: 1px solid #ecc890;
+            }
+        </style>
+<style>
+
+            /* --------------------- flax --------------------- */
+            .row.flax {
+                background-color: #b5a35b;
+                border-bottom: 1px solid #ffed8f;
+                border-top: 1px solid #ffed8f;
+            }
+
+            .row.flax:hover {
+                background-color: flax;
+                border: 1px solid flax;
+            }
+
+            .box.flax {
+                background-color: #b5a35b;
+                border: 1px solid #ffed8f;
+            }
+
+            .row.flax:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.flax
+            {
+                border: 1px solid #ffed8f;
+            }
+        </style>
+<style>
+
+            /* --------------------- dark-flax --------------------- */
+            .row.dark-flax {
+                background-color: #201d0f;
+                border-bottom: 1px solid #ffed8f;
+                border-top: 1px solid #ffed8f;
+            }
+
+            .row.dark-flax:hover {
+                background-color: flax;
+                border: 1px solid flax;
+            }
+
+            .box.dark-flax {
+                background-color: #201d0f;
+                border: 1px solid #ffed8f;
+            }
+
+            .row.dark-flax:hover > .number {
+                font-weight: bold;
+            }
+            
+            .tooltip-dropdown-content.dark-flax
+            {
+                border: 1px solid #ffed8f;
+            }
+        </style>
+</head>
+<body>
+<script>
+    function toggleFold(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+<script>
+    function toggleBorderWidth(id) {
+        var x = document.getElementById(id);
+        if (x.style.borderWidth  === "4px") {
+            x.style.borderWidth  = "1px";
+        } else {
+            x.style.borderWidth  = "4px";
+        }
+    }
+</script>
+<script>
+    class Tooltip extends HTMLElement {
+        connectedCallback() {
+            this.setup();
+        }
+
+        handleDropdownPosition() {
+            const screenPadding = 0;
+
+            const placeholderRect = this.placeholder.getBoundingClientRect();
+            const dropdownRect = this.dropdown.getBoundingClientRect();
+
+            const dropdownRightX = dropdownRect.x + dropdownRect.width;
+            const placeholderRightX = placeholderRect.x + placeholderRect.width;
+
+            if (dropdownRect.x < 0) {
+                this.dropdown.style.left = '0';
+                this.dropdown.style.right = 'auto';
+                this.dropdown.style.transform = `translateX(${-placeholderRect.x + screenPadding}px)`;
+            } else if (dropdownRightX > window.outerWidth) {
+                this.dropdown.style.left = 'auto';
+                this.dropdown.style.right = '0';
+                this.dropdown.style.transform = `translateX(${(window.outerWidth - placeholderRightX) - screenPadding}px)`;
+            }
+        }
+
+        toggle() {
+            if (this.classList.contains('tooltip--open')) {
+                this.close();
+            } else {
+                this.open();
+            }
+        }
+
+        open() {
+            this.classList.add('tooltip--open');
+            this.handleDropdownPosition();
+        }
+
+        close() {
+            this.classList.remove('tooltip--open');
+        }
+
+        setup() {
+            this.placeholder = this.querySelector('[data-tooltip-placeholder]');
+            this.dropdown = this.querySelector('[data-tooltip-dropdown]');
+
+            this.placeholder.addEventListener('mouseover', () => this.handleDropdownPosition());
+            this.placeholder.addEventListener('touchstart', () => this.toggle());
+        }
+    }
+
+    function dismissAllTooltips(event) {
+        if (typeof event.target.closest !== 'function') return;
+        const currentTooltip = event.target.closest('carwow-tooltip');
+
+        document.querySelectorAll('.tooltip--open').forEach(tooltip => {
+            if (tooltip === currentTooltip) return;
+
+            tooltip.classList.remove('tooltip--open');
+        });
+    }
+
+    customElements.define('wow-tooltip', Tooltip);
+    document.addEventListener('touchstart', e => dismissAllTooltips(e));
+</script>
+
+        <div class="row tableHeader" id="" onlick="toggleBorderWidth(row-1684310422.113455-1)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 15%"> Variable </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 15%"> Value </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 60%"> Description </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 8%"> Comment </span>                
+        </div>
+        
+
+        <div class="row table" id="" onlick="toggleBorderWidth(row-1684310422.113455-2)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 15%"> disconnection.delay </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 15%"> 500ms </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 60%"> Delay after disconnection </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 8%"> ... </span>                
+        </div>
+        
+
+        <div class="row table" id="" onlick="toggleBorderWidth(row-1684310422.113455-3)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 15%"> disconnection.counter </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 15%"> 10 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 60%"> Count of retries </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 8%"> ... </span>                
+        </div>
+        
+
+        <div class="row table" id="" onlick="toggleBorderWidth(row-1684310422.113455-4)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 15%"> long.mk.description </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 15%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 60%"> <p>Very nice list:</p>
+<ul>
+<li>Markdown list item</li>
+<li>Markdown list item</li>
+<li>Markdown list item</li>
+<li>Markdown list item</li>
+</ul> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; min-width: 8%"> ... </span>                
+        </div>
+        
+<div style="margin-top: 50px;"></div>
+
+        <div class="row tableHeader" id="" onlick="toggleBorderWidth(row-1684310422.113455-5)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%"> # </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> Source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> Row </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%"> Comment </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-6)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-7)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box red">Colored red text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row red" id="" onlick="toggleBorderWidth(row-1684310422.113455-8)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> red </span>
+<span class="red", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId9" data-tooltip-placeholder>
+                    <div class="box red">Colored red text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId9" class="tooltip-dropdown-content red" style="width:200px">
+                        Colored red text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-10)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-11)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box dark-red">Colored dark-red text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-red" id="" onlick="toggleBorderWidth(row-1684310422.113455-12)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> dark-red </span>
+<span class="dark-red", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId13" data-tooltip-placeholder>
+                    <div class="box dark-red">Colored dark-red text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId13" class="tooltip-dropdown-content dark-red" style="width:200px">
+                        Colored dark-red text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-14)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-15)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box green">Colored green text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row green" id="" onlick="toggleBorderWidth(row-1684310422.113455-16)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> green </span>
+<span class="green", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId17" data-tooltip-placeholder>
+                    <div class="box green">Colored green text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId17" class="tooltip-dropdown-content green" style="width:200px">
+                        Colored green text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-18)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-19)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box dark-green">Colored dark-green text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-green" id="" onlick="toggleBorderWidth(row-1684310422.113455-20)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> dark-green </span>
+<span class="dark-green", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId21" data-tooltip-placeholder>
+                    <div class="box dark-green">Colored dark-green text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId21" class="tooltip-dropdown-content dark-green" style="width:200px">
+                        Colored dark-green text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-22)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-23)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box blue">Colored blue text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row blue" id="" onlick="toggleBorderWidth(row-1684310422.113455-24)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> blue </span>
+<span class="blue", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId25" data-tooltip-placeholder>
+                    <div class="box blue">Colored blue text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId25" class="tooltip-dropdown-content blue" style="width:200px">
+                        Colored blue text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-26)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-27)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box dark-blue">Colored dark-blue text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-blue" id="" onlick="toggleBorderWidth(row-1684310422.113455-28)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> dark-blue </span>
+<span class="dark-blue", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId29" data-tooltip-placeholder>
+                    <div class="box dark-blue">Colored dark-blue text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId29" class="tooltip-dropdown-content dark-blue" style="width:200px">
+                        Colored dark-blue text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-30)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-31)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box yellow">Colored yellow text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row yellow" id="" onlick="toggleBorderWidth(row-1684310422.113455-32)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> yellow </span>
+<span class="yellow", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId33" data-tooltip-placeholder>
+                    <div class="box yellow">Colored yellow text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId33" class="tooltip-dropdown-content yellow" style="width:200px">
+                        Colored yellow text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-34)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-35)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box dark-yellow">Colored dark-yellow text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-yellow" id="" onlick="toggleBorderWidth(row-1684310422.113455-36)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> dark-yellow </span>
+<span class="dark-yellow", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId37" data-tooltip-placeholder>
+                    <div class="box dark-yellow">Colored dark-yellow text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId37" class="tooltip-dropdown-content dark-yellow" style="width:200px">
+                        Colored dark-yellow text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-38)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-39)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box gray">Colored gray text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row gray" id="" onlick="toggleBorderWidth(row-1684310422.113455-40)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> gray </span>
+<span class="gray", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId41" data-tooltip-placeholder>
+                    <div class="box gray">Colored gray text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId41" class="tooltip-dropdown-content gray" style="width:200px">
+                        Colored gray text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-42)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-43)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box dark-gray">Colored dark-gray text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-gray" id="" onlick="toggleBorderWidth(row-1684310422.113455-44)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> dark-gray </span>
+<span class="dark-gray", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId45" data-tooltip-placeholder>
+                    <div class="box dark-gray">Colored dark-gray text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId45" class="tooltip-dropdown-content dark-gray" style="width:200px">
+                        Colored dark-gray text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-46)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-47)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box violet">Colored violet text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row violet" id="" onlick="toggleBorderWidth(row-1684310422.113455-48)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> violet </span>
+<span class="violet", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId49" data-tooltip-placeholder>
+                    <div class="box violet">Colored violet text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId49" class="tooltip-dropdown-content violet" style="width:200px">
+                        Colored violet text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-50)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-51)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box dark-violet">Colored dark-violet text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-violet" id="" onlick="toggleBorderWidth(row-1684310422.113455-52)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> dark-violet </span>
+<span class="dark-violet", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId53" data-tooltip-placeholder>
+                    <div class="box dark-violet">Colored dark-violet text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId53" class="tooltip-dropdown-content dark-violet" style="width:200px">
+                        Colored dark-violet text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-54)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-55)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box orange">Colored orange text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row orange" id="" onlick="toggleBorderWidth(row-1684310422.113455-56)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> orange </span>
+<span class="orange", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId57" data-tooltip-placeholder>
+                    <div class="box orange">Colored orange text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId57" class="tooltip-dropdown-content orange" style="width:200px">
+                        Colored orange text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-58)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-59)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box dark-orange">Colored dark-orange text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-orange" id="" onlick="toggleBorderWidth(row-1684310422.113455-60)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> dark-orange </span>
+<span class="dark-orange", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId61" data-tooltip-placeholder>
+                    <div class="box dark-orange">Colored dark-orange text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId61" class="tooltip-dropdown-content dark-orange" style="width:200px">
+                        Colored dark-orange text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-62)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-63)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box pink">Colored pink text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row pink" id="" onlick="toggleBorderWidth(row-1684310422.113455-64)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> pink </span>
+<span class="pink", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId65" data-tooltip-placeholder>
+                    <div class="box pink">Colored pink text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId65" class="tooltip-dropdown-content pink" style="width:200px">
+                        Colored pink text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-66)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-67)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box dark-pink">Colored dark-pink text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-pink" id="" onlick="toggleBorderWidth(row-1684310422.113455-68)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> dark-pink </span>
+<span class="dark-pink", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId69" data-tooltip-placeholder>
+                    <div class="box dark-pink">Colored dark-pink text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId69" class="tooltip-dropdown-content dark-pink" style="width:200px">
+                        Colored dark-pink text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-70)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-71)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box cyan">Colored cyan text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row cyan" id="" onlick="toggleBorderWidth(row-1684310422.113455-72)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> cyan </span>
+<span class="cyan", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId73" data-tooltip-placeholder>
+                    <div class="box cyan">Colored cyan text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId73" class="tooltip-dropdown-content cyan" style="width:200px">
+                        Colored cyan text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-74)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-75)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box dark-cyan">Colored dark-cyan text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-cyan" id="" onlick="toggleBorderWidth(row-1684310422.113455-76)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> dark-cyan </span>
+<span class="dark-cyan", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId77" data-tooltip-placeholder>
+                    <div class="box dark-cyan">Colored dark-cyan text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId77" class="tooltip-dropdown-content dark-cyan" style="width:200px">
+                        Colored dark-cyan text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-78)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-79)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box navy">Colored navy text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row navy" id="" onlick="toggleBorderWidth(row-1684310422.113455-80)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> navy </span>
+<span class="navy", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId81" data-tooltip-placeholder>
+                    <div class="box navy">Colored navy text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId81" class="tooltip-dropdown-content navy" style="width:200px">
+                        Colored navy text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-82)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-83)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box dark-navy">Colored dark-navy text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-navy" id="" onlick="toggleBorderWidth(row-1684310422.113455-84)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> dark-navy </span>
+<span class="dark-navy", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId85" data-tooltip-placeholder>
+                    <div class="box dark-navy">Colored dark-navy text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId85" class="tooltip-dropdown-content dark-navy" style="width:200px">
+                        Colored dark-navy text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-86)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-87)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box mink">Colored mink text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row mink" id="" onlick="toggleBorderWidth(row-1684310422.113455-88)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> mink </span>
+<span class="mink", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId89" data-tooltip-placeholder>
+                    <div class="box mink">Colored mink text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId89" class="tooltip-dropdown-content mink" style="width:200px">
+                        Colored mink text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-90)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-91)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box dark-mink">Colored dark-mink text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-mink" id="" onlick="toggleBorderWidth(row-1684310422.113455-92)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> dark-mink </span>
+<span class="dark-mink", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId93" data-tooltip-placeholder>
+                    <div class="box dark-mink">Colored dark-mink text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId93" class="tooltip-dropdown-content dark-mink" style="width:200px">
+                        Colored dark-mink text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-94)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-95)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box tortila">Colored tortila text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row tortila" id="" onlick="toggleBorderWidth(row-1684310422.113455-96)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> tortila </span>
+<span class="tortila", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId97" data-tooltip-placeholder>
+                    <div class="box tortila">Colored tortila text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId97" class="tooltip-dropdown-content tortila" style="width:200px">
+                        Colored tortila text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-98)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-99)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box dark-tortila">Colored dark-tortila text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-tortila" id="" onlick="toggleBorderWidth(row-1684310422.113455-100)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> dark-tortila </span>
+<span class="dark-tortila", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId101" data-tooltip-placeholder>
+                    <div class="box dark-tortila">Colored dark-tortila text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId101" class="tooltip-dropdown-content dark-tortila" style="width:200px">
+                        Colored dark-tortila text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-102)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-103)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box flax">Colored flax text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row flax" id="" onlick="toggleBorderWidth(row-1684310422.113455-104)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> flax </span>
+<span class="flax", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId105" data-tooltip-placeholder>
+                    <div class="box flax">Colored flax text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId105" class="tooltip-dropdown-content flax" style="width:200px">
+                        Colored flax text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-106)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-107)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> <div class="box dark-flax">Colored dark-flax text box</div> </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-flax" id="" onlick="toggleBorderWidth(row-1684310422.113455-108)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> dark-flax </span>
+<span class="dark-flax", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> 
+            <wow-tooltip class="tooltip">
+                <div class="tooltip-label" aria-describedby="tooltip-1684310422.113455-autoId109" data-tooltip-placeholder>
+                    <div class="box dark-flax">Colored dark-flax text box</div>
+                </div>
+                <div class="tooltip-dropdown" data-tooltip-dropdown>
+                    <div role="tooltip" id="tooltip-1684310422.113455-autoId109" class="tooltip-dropdown-content dark-flax" style="width:200px">
+                        Colored dark-flax text box tool tip
+                    </div>
+                </div>
+            </wow-tooltip>
+         </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.113455-110)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-red" id="" onlick="toggleBorderWidth(row-1684310422.114453-111)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> red </span>
+<span class="red", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> <div class="box red">Colored red text box</div> </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.114453-112)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-green" id="" onlick="toggleBorderWidth(row-1684310422.114453-113)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> green </span>
+<span class="green", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> <div class="box green">Colored green text box</div> </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.114453-114)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-blue" id="" onlick="toggleBorderWidth(row-1684310422.114453-115)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> blue </span>
+<span class="blue", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> <div class="box blue">Colored blue text box</div> </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.114453-116)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-yellow" id="" onlick="toggleBorderWidth(row-1684310422.114453-117)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> yellow </span>
+<span class="yellow", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> <div class="box yellow">Colored yellow text box</div> </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.114453-118)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-gray" id="" onlick="toggleBorderWidth(row-1684310422.114453-119)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> gray </span>
+<span class="gray", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> <div class="box gray">Colored gray text box</div> </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.114453-120)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-violet" id="" onlick="toggleBorderWidth(row-1684310422.114453-121)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> violet </span>
+<span class="violet", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> <div class="box violet">Colored violet text box</div> </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.114453-122)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-orange" id="" onlick="toggleBorderWidth(row-1684310422.114453-123)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> orange </span>
+<span class="orange", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> <div class="box orange">Colored orange text box</div> </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.114453-124)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-pink" id="" onlick="toggleBorderWidth(row-1684310422.114453-125)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> pink </span>
+<span class="pink", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> <div class="box pink">Colored pink text box</div> </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.114453-126)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-cyan" id="" onlick="toggleBorderWidth(row-1684310422.114453-127)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> cyan </span>
+<span class="cyan", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> <div class="box cyan">Colored cyan text box</div> </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.114453-128)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-navy" id="" onlick="toggleBorderWidth(row-1684310422.114453-129)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> navy </span>
+<span class="navy", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> <div class="box navy">Colored navy text box</div> </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.114453-130)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-mink" id="" onlick="toggleBorderWidth(row-1684310422.114453-131)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> mink </span>
+<span class="mink", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> <div class="box mink">Colored mink text box</div> </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.114453-132)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-tortila" id="" onlick="toggleBorderWidth(row-1684310422.114453-133)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> tortila </span>
+<span class="tortila", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> <div class="box tortila">Colored tortila text box</div> </span>                
+        </div>
+        
+
+        <div class="row notHighlighted" id="" onlick="toggleBorderWidth(row-1684310422.114453-134)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%"> - </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%;"> - </span>                
+        </div>
+        
+
+        <div class="row dark-flax" id="" onlick="toggleBorderWidth(row-1684310422.114453-135)">
+            <span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 5%; padding-left:2px;"> 0 </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 10%;"> source </span>
+<span class="", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 70%;"> flax </span>
+<span class="flax", style="display:inline-block; vertical-align: middle; word-break: break-all; width: 13%; vertical-align: center;"> <div class="box flax">Colored flax text box</div> </span>                
+        </div>
+        </body>
+</html>

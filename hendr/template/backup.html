@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0px;
+            font-size: 12px;
+            font-family: monospace;
+            color: white;
+        }
+
+        h1 {
+            color: #adadad;
+        }
+
+        /* BASE */
+        .row {
+            width: 100%;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            margin: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            color: white;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        .row.table {
+            border-bottom: 1px solid #737373;
+        }
+
+        .row.table:hover {
+            background-color: #2c2c2c;
+            border-right: 1px solid #6b6b6b;
+        }
+
+        .row.tableHeader {
+            font-size: 125%;
+            background-color: #363636;
+            color: #b7b7b7;
+            font-weight: bold;
+        }
+
+        .thinSeparator {
+            width: 100%;
+            border-bottom: 1px solid #737373;
+        }
+
+        .box {
+            display: inline-block;
+            margin: 1px;
+            padding: 1px;
+        }
+
+        .number {
+            text-align: left;
+        }
+
+        /* RED */
+        .row.red {
+            background-color: #a75d5d;
+            border-bottom: 1px solid red;
+            border-top: 1px solid red;
+        }
+
+        .row.red:hover {
+            background-color: #c24646;
+            border: 1px solid red;
+            /*border-left: 4px solid red;*/
+            border-right: 1px solid red;
+        }
+
+        .box.red {
+            background-color: #c42020;
+            border: 1px solid red;
+        }
+
+        .row.red:hover > .number {
+            font-weight: bold;
+        }
+
+        /* GREEN */
+        .row.green {
+            border-top: 1px solid #00ff00;
+            border-bottom: 1px solid #00ff00;
+            background: #008c00;
+        }
+
+        .row.green > .number:hover {
+            background: #005600;
+        }
+
+        .row.green:hover {
+            background: #005600;
+        }
+
+        /* Not Highlight */
+        .row.notHighlighted {
+
+        }
+
+        .row.notHighlighted:hover > .number {
+            font-weight: bold;
+        }
+
+        .row.notHighlighted:hover {
+            border: 1px solid #b0b0b0;
+            border-right: 1px solid #b0b0b0;
+            /*border-left: 1px solid #b0b0b0;*/
+            background: #414141;
+        }
+
+    </style>
+
+    <style>
+        .top-panel {
+            position: fixed;
+            overflow: hidden;
+            top: 0;
+            width: 100%;
+            vertical-align: middle;
+        }
+
+
+        .top-panel .major {
+            overflow: hidden;
+            background-color: #292929;
+            width: 100%;
+            padding: 2px;
+            border-bottom: 1px solid #3f3f3f;
+            vertical-align: middle;
+        }
+
+        .top-panel .minor {
+            overflow: hidden;
+            background-color: #1a1a1a;
+            width: 100%;
+            padding: 2px;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #3f3f3f;
+            vertical-align: middle;
+            font-size: 12px;
+        }
+
+        .top-spacer {
+            margin-top: 90px;
+        }
+
+        .bottom-panel {
+            overflow: hidden;
+            background-color: #1a1a1a;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 2px;
+            vertical-align: middle;
+            border-top: 1px solid #3f3f3f;
+            font-size: 11px;
+            text-align: center;
+        }
+    </style>
+
+    <style>
+        /*https://medium.com/carwow-product-engineering/building-a-simple-tooltip-component-that-never-goes-off-screen-c7039dcab5f9*/
+        @-webkit-keyframes tooltipFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes tooltipFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .tooltip {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            /*color: blue;*/
+            /*border-bottom: 1px dashed;*/
+            position: relative;
+        }
+
+        .tooltip-label:before {
+            content: "";
+            display: flex;
+            cursor: help;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+        }
+
+        .tooltip-dropdown {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            padding-top: 32px;
+            /*word-wrap: break-word;*/
+        }
+
+        .tooltip-dropdown-content {
+            color: white;
+            background-color: black;
+            border: 1px solid gray;
+            border-radius: 4px;
+            padding: 8px 12px;
+            width: 850px;
+            text-align: left;
+            /*word-wrap: break-word;*/
+        }
+
+        .tooltip-dropdown-content.red {
+            border: 1px solid red;
+        }
+
+        .tooltip--open .tooltip-dropdown {
+            -webkit-animation: tooltipFadeIn 0.15s;
+            animation: tooltipFadeIn 0.15s;
+            display: block;
+        }
+
+        @media (hover: hover) {
+            .tooltip:hover .tooltip-dropdown {
+                -webkit-animation: tooltipFadeIn 0.15s;
+                animation: tooltipFadeIn 0.15s;
+                display: block;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<script>
+    function toggleFold(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+<script>
+    class Tooltip extends HTMLElement {
+        connectedCallback() {
+            this.setup();
+        }
+
+        handleDropdownPosition() {
+            const screenPadding = 0;
+
+            const placeholderRect = this.placeholder.getBoundingClientRect();
+            const dropdownRect = this.dropdown.getBoundingClientRect();
+
+            const dropdownRightX = dropdownRect.x + dropdownRect.width;
+            const placeholderRightX = placeholderRect.x + placeholderRect.width;
+
+            if (dropdownRect.x < 0) {
+                this.dropdown.style.left = '0';
+                this.dropdown.style.right = 'auto';
+                this.dropdown.style.transform = `translateX(${-placeholderRect.x + screenPadding}px)`;
+            } else if (dropdownRightX > window.outerWidth) {
+                this.dropdown.style.left = 'auto';
+                this.dropdown.style.right = '0';
+                this.dropdown.style.transform = `translateX(${(window.outerWidth - placeholderRightX) - screenPadding}px)`;
+            }
+        }
+
+        toggle() {
+            if (this.classList.contains('tooltip--open')) {
+                this.close();
+            } else {
+                this.open();
+            }
+        }
+
+        open() {
+            this.classList.add('tooltip--open');
+            this.handleDropdownPosition();
+        }
+
+        close() {
+            this.classList.remove('tooltip--open');
+        }
+
+        setup() {
+            this.placeholder = this.querySelector('[data-tooltip-placeholder]');
+            this.dropdown = this.querySelector('[data-tooltip-dropdown]');
+
+            this.placeholder.addEventListener('mouseover', () => this.handleDropdownPosition());
+            this.placeholder.addEventListener('touchstart', () => this.toggle());
+        }
+    }
+
+    function dismissAllTooltips(event) {
+        if (typeof event.target.closest !== 'function') return;
+        const currentTooltip = event.target.closest('carwow-tooltip');
+
+        document.querySelectorAll('.tooltip--open').forEach(tooltip => {
+            if (tooltip === currentTooltip) return;
+
+            tooltip.classList.remove('tooltip--open');
+        });
+    }
+
+    customElements.define('wow-tooltip', Tooltip);
+    document.addEventListener('touchstart', e => dismissAllTooltips(e));
+</script>
+</body>
+</html>
